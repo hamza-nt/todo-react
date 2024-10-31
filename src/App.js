@@ -10,6 +10,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ToDoList />} />
           <Route path="/add" element={<ToDoForm />} />
+          <Route path="/edit/:id" element={<ToDoForm />} />
         </Routes>
       </div>
     </Router>

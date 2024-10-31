@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ToDoList.css';
 import modifIcon from '../../images/modif.png';
 import deleteIcon from '../../images/delete.png';
@@ -6,10 +6,36 @@ import { useNavigate } from 'react-router-dom';
 
 function ToDoList() {
     
-    const navigate = useNavigate();
-    const handleClick = () => {
-        navigate('/add');
+  const navigate = useNavigate();
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+        const response = await fetch('http://localhost:5000/todos');
+        const data = await response.json();
+        setTasks(data);
     };
+
+    fetchTasks();
+  }, []);
+
+  const handleClick = () => {
+        navigate('/add');
+  };
+
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?");
+    if (confirmed) {
+        await fetch(`http://localhost:5000/todos/${id}`, {
+            method: 'DELETE',
+        });
+        setTasks(tasks.filter(task => task.id !== id));
+    }
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/edit/${id}`);
+  };
 
   return (
     <div className='wrapper'>
@@ -33,36 +59,18 @@ function ToDoList() {
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td id='tr-task'>Learn React</td>
-                    <td id='tr-desc'>Managing State, Escape Hatches, Effects</td>
-                    <td id='tr-cat'>Programming</td>
-                    <td id='tr-when'>-</td>
-                    <td id='tr-prio'>High</td>
-                    <td id='tr-ful'>30%</td>
-                    <td><a><img className='modif-del' src={modifIcon}/></a></td>
-                    <td><a><img className='modif-del' src={deleteIcon}/></a></td>
-                </tr>
-                <tr>
-                    <td id='tr-task'>Shopping</td>
-                    <td id='tr-desc'>Potatoes, Onions, Eggs, Olive Oil</td>
-                    <td>Household</td>
-                    <td>26.02.2023</td>
-                    <td>High</td>
-                    <td>0%</td>
-                    <td><a><img className='modif-del' src={modifIcon}/></a></td>
-                    <td><a><img className='modif-del' src={deleteIcon}/></a></td>
-                </tr>
-                <tr>
-                    <td id='tr-task'>Buy the tickets</td>
-                    <td id='tr-desc'>at cheaptickets.com/shanghai</td>
-                    <td>Travel</td>
-                    <td>12.01.2023 12:00</td>
-                    <td>Medium</td>
-                    <td>100%</td>
-                    <td><a><img className='modif-del' src={modifIcon}/></a></td>
-                    <td><a><img className='modif-del' src={deleteIcon}/></a></td>
-                </tr>
+                  {tasks.map(task => (
+                    <tr key={task.id}>
+                      <td id='tr-task'>{task.task}</td>
+                      <td id='tr-desc'>{task.description}</td>
+                      <td id='tr-cat'>{task.category}</td>
+                      <td id='tr-when'>{task.when}</td>
+                      <td id='tr-prio'>{task.priority}</td>
+                      <td id='tr-ful'>{task.fulfillment}</td>
+                      <td><button onClick={() => handleEdit(task.id)}><img className='modif-del' src={modifIcon}/></button></td>
+                      <td><button onClick={() => handleDelete(task.id)}><img className='modif-del' src={deleteIcon}/></button></td>
+                    </tr>
+                  ))}
                 </tbody>
             </table>
         </div>

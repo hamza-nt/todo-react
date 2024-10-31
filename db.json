@@ -1,32 +1,31 @@
 {
-    "todos": [
-      {
-        "id": 1,
-        "task": "Learn React",
-        "description": "Managing State, Escape Hatches, Effects",
-        "category": "Programming",
-        "when": "",
-        "priority": "High",
-        "fulfillment": "30%"
-      },
-      {
-        "id": 2,
-        "task": "Shopping",
-        "description": "Potatoes, Onions, Eggs, Olive Oil",
-        "category": "Household",
-        "when": "26.02.23",
-        "priority": "High",
-        "fulfillment": "0%"
-      },
-      {
-        "id": 3,
-        "task": "Buy the tickets",
-        "description": "at cheaptickets.com/shanghai",
-        "category": "Travel",
-        "when": "12.01.2023 12:00",
-        "priority": "Medium",
-        "fulfillment": "100%"
-      }
-    ]
+  "todos": [
+    {
+      "task": "Faire du sport",
+      "description": "Aller courir",
+      "category": "Sport",
+      "when": "01/11/2024 08:00",
+      "priority": "Low",
+      "fulfillment": "3%",
+      "id": "180d"
+    },
+    {
+      "task": "Faire les courses",
+      "description": "Je vais acheter quelques choses",
+      "category": "Courses",
+      "when": "31/10/2024 20:30",
+      "priority": "Medium",
+      "fulfillment": "47%",
+      "id": "ac66"
+    },
+    {
+      "id": "e1f1",
+      "task": "Apprendre React ",
+      "description": "Développer un site en React",
+      "category": "Programmation",
+      "when": "04/12/2024 09:00",
+      "priority": "High",
+      "fulfillment": "6%"
+    }
+  ]
 }
-
