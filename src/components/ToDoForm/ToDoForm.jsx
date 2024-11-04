@@ -73,7 +73,7 @@ function ToDoForm() {
     <div className='wrapper2'>
       <div className="frame2">
         <h2 className='h2-2'>React To-Do List</h2>
-        <form className="sous-frame2" onSubmit={handleSubmit}>
+        <form className="sous-frame2" onSubmit={handleSubmit} data-testid="todo-form">
           <h3>Add a new to-do:</h3>
           <div className="form-columns">
             <div className="left-column">

@@ -41,11 +41,11 @@ function ToDoList() {
     <div className='wrapper'>
       <div className="frame">
         <h2 className='h2-1'>React To-Do List</h2>
-        <button className='btn-add' onClick={handleClick}><span class="text-add">Add a new to-do</span></button>
-        <button className='btn-all'><span class="text-all">All</span></button>
-        <button className='btn-todo'><span class="text-todo">To-do</span></button>
-        <button className='btn-completed'><span class="text-add">Completed</span></button>
-        <div class="sous-frame">
+        <button className='btn-add' onClick={handleClick}><span className="text-add">Add a new to-do</span></button>
+        <button className='btn-all'><span className="text-all">All</span></button>
+        <button className='btn-todo'><span className="text-todo">To-do</span></button>
+        <button className='btn-completed'><span className="text-add">Completed</span></button>
+        <div className="sous-frame">
             <table>
                 <thead>
                 <tr>
@@ -67,8 +67,8 @@ function ToDoList() {
                       <td id='tr-when'>{task.when}</td>
                       <td id='tr-prio'>{task.priority}</td>
                       <td id='tr-ful'>{task.fulfillment}</td>
-                      <td><button onClick={() => handleEdit(task.id)}><img className='modif-del' src={modifIcon}/></button></td>
-                      <td><button onClick={() => handleDelete(task.id)}><img className='modif-del' src={deleteIcon}/></button></td>
+                      <td><button onClick={() => handleEdit(task.id)}><img className='modif-del' src={modifIcon} alt='modify icon'/></button></td>
+                      <td><button onClick={() => handleDelete(task.id)}><img className='modif-del' src={deleteIcon} alt='delete icon'/></button></td>
                     </tr>
                   ))}
                 </tbody>
