@@ -1,15 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import ToDoForm from './ToDoForm';
-import { BrowserRouter } from 'react-router-dom';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
 const mockNavigate = jest.fn();
-
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockNavigate,
 }));
+
+global.fetch = jest.fn();
 
 describe('Composant ToDoForm', () => {
 
@@ -25,9 +25,9 @@ describe('Composant ToDoForm', () => {
 
   test('Affichage du Formulaire', () => {
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <ToDoForm />
-      </BrowserRouter>
+      </MemoryRouter>
     );
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/description/i)).toBeInTheDocument();
@@ -40,9 +40,9 @@ describe('Composant ToDoForm', () => {
 
   test('Simuler envoi du Fomulaire', async () => {
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <ToDoForm />
-      </BrowserRouter>
+      </MemoryRouter>
     );
     userEvent.type(screen.getByLabelText(/name/i), 'Nouvelle tâche');
     userEvent.type(screen.getByLabelText(/description/i), 'Description test');
@@ -53,6 +53,38 @@ describe('Composant ToDoForm', () => {
     userEvent.click(screen.getByRole('button', { name: /save/i }));
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith('/');
+    });
+  });
+
+  test('Récupération des données', async () => {
+    const mockTask = {
+      task: "Apprendre React",
+      description: "Développer un site en React",
+      category: "Programmation",
+      when: "04/12/2024 09:00",
+      priority: "High",
+      fulfillment: "6%"
+    };
+    fetch.mockImplementationOnce(() =>
+      Promise.resolve({
+        json: () => Promise.resolve(mockTask),
+      })
+    );
+    render(
+      <MemoryRouter initialEntries={['/todos/e1f1']}>
+        <Routes>
+          <Route path="/todos/:id" element={<ToDoForm />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => {
+      expect(screen.getByLabelText(/name/i)).toHaveValue(mockTask.task);
+      expect(screen.getByLabelText(/description/i)).toHaveValue(mockTask.description);
+      expect(screen.getByLabelText(/category/i)).toHaveValue(mockTask.category);
+      expect(screen.getByLabelText(/date/i)).toHaveValue("04/12/2024");
+      expect(screen.getByLabelText(/time/i)).toHaveValue("09:00");
+      expect(screen.getByLabelText(/priority/i)).toHaveValue(mockTask.priority);
+      expect(screen.getByLabelText(/fulfillment/i)).toHaveValue("6");
     });
   });
 });

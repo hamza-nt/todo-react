@@ -39,7 +39,7 @@ function ToDoList() {
 
   return (
     <div className='wrapper'>
-      <div className="frame">
+      <div className="frame" data-testid="todo-list">
         <h2 className='h2-1'>React To-Do List</h2>
         <button className='btn-add' onClick={handleClick}><span className="text-add">Add a new to-do</span></button>
         <button className='btn-all'><span className="text-all">All</span></button>

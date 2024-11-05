@@ -22,20 +22,18 @@ function ToDoForm() {
         setTask(data.task);
         setDescription(data.description);
         setCategory(data.category);
-        const [taskDate, taskTime] = data.when.split(' '); // Séparer la date et l'heure
-        setDate(taskDate); // Remplir le champ date
-        setTime(taskTime); // Remplir le champ heure
+        const [taskDate, taskTime] = data.when.split(' ');
+        setDate(taskDate);
+        setTime(taskTime);
         setPriority(data.priority);
         setFulfillment(parseInt(data.fulfillment));
       };
-
       fetchTask();
     }
   }, [id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const newTask = {
       task,
       description,
@@ -44,9 +42,7 @@ function ToDoForm() {
       priority,
       fulfillment: `${fulfillment}%`,
     };
-
     if (id) {
-      // Si un ID est présent, mettez à jour la tâche existante
       await fetch(`http://localhost:5000/todos/${id}`, {
         method: 'PUT',
         headers: {
@@ -55,7 +51,6 @@ function ToDoForm() {
         body: JSON.stringify(newTask),
       });
     } else {
-      // Si pas d'ID, créez une nouvelle tâche
       await fetch('http://localhost:5000/todos', {
         method: 'POST',
         headers: {
@@ -64,8 +59,6 @@ function ToDoForm() {
         body: JSON.stringify(newTask),
       });
     }
-
-    // Redirection vers la page de liste des tâches
     navigate('/');
   };
 
@@ -81,44 +74,44 @@ function ToDoForm() {
                 <label htmlFor="name">Name:</label>
                 <input type="text" id="name" placeholder="name for the task you're going to do" value={task}
                   onChange={(e) => setTask(e.target.value)}
-                  required/>
+                  required />
               </div>
               <div className="form-group">
                 <label htmlFor="description">Description:</label>
-                <textarea id="description" placeholder="a short description of the task - can be omitted" 
-                value={description}
+                <textarea id="description" placeholder="a short description of the task - can be omitted"
+                  value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
               </div>
               <div className="form-group">
                 <label htmlFor="category">Category:</label>
-                <input type="text" id="category" placeholder="e.g. household, school, work" 
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                <input type="text" id="category" placeholder="e.g. household, school, work"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="date">Date:</label>
-                <input type="text" id="date" placeholder="dd/mm/yyyy - can be ommitted" 
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                <input type="text" id="date" placeholder="dd/mm/yyyy - can be ommitted"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="time">Time:</label>
-                <input type="text" id="time" placeholder="hh:mm - can be ommitted" 
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
+                <input type="text" id="time" placeholder="hh:mm - can be ommitted"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
                 />
               </div>
             </div>
-            
+
             <div className="right-column">
               <div className="form-group">
                 <label htmlFor="priority">Priority:</label>
                 <select id="priority"
-                value={priority}
-                onChange={(e) => setPriority(e.target.value)}
+                  value={priority}
+                  onChange={(e) => setPriority(e.target.value)}
                 >
                   <option>select from dropdown</option>
                   <option value="High">High</option>
@@ -128,11 +121,11 @@ function ToDoForm() {
               </div>
               <div className="form-group">
                 <label htmlFor="fulfillment">Fulfillment:</label>
-                <input type="range" id="fulfillment" 
-                value={fulfillment}
-                onChange={(e) => setFulfillment(e.target.value)}
-                min="0"
-                max="100"
+                <input type="range" id="fulfillment"
+                  value={fulfillment}
+                  onChange={(e) => setFulfillment(e.target.value)}
+                  min="0"
+                  max="100"
                 />
               </div>
               <div className="button-group">
@@ -145,7 +138,7 @@ function ToDoForm() {
         <footer>
           <p className='copyright2'>Patryk Kielian © 2023 all rights reserved</p>
         </footer>
-        
+
       </div>
     </div>
   );
