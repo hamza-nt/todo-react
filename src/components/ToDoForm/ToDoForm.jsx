@@ -34,7 +34,14 @@ function ToDoForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // // Récupère les tâches actuelles pour obtenir le dernier ID
+    // const response = await fetch('http://localhost:5000/todos');
+    // const tasks = await response.json();
+    // // Détermine le dernier ID ou commence à 1 si aucun élément
+    //c onst lastId = tasks.length ? Math.max(...tasks.map(task => task.id)) : 0;
+    // const newId = lastId + 1; // ID incrémenté
     const newTask = {
+      // id: newId, // Ajoute un ID incrémenté
       task,
       description,
       category,

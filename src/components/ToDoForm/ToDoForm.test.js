@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import ToDoForm from './ToDoForm';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { mockTaskData } from '../../tests/mocks';
 
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -56,20 +57,14 @@ describe('Composant ToDoForm', () => {
     });
   });
 
-  test('Récupération des données', async () => {
-    const mockTask = {
-      task: "Apprendre React",
-      description: "Développer un site en React",
-      category: "Programmation",
-      when: "04/12/2024 09:00",
-      priority: "High",
-      fulfillment: "6%"
-    };
+  test('Récupération des données depuis une base de données simulée', async () => {
+    // Mock fetch pour retourner les données simulées
     fetch.mockImplementationOnce(() =>
       Promise.resolve({
-        json: () => Promise.resolve(mockTask),
+        json: () => Promise.resolve(mockTaskData[0]), // Renvoie la première tâche de mockTaskData
       })
     );
+    
     render(
       <MemoryRouter initialEntries={['/todos/e1f1']}>
         <Routes>
@@ -77,13 +72,14 @@ describe('Composant ToDoForm', () => {
         </Routes>
       </MemoryRouter>
     );
+    
     await waitFor(() => {
-      expect(screen.getByLabelText(/name/i)).toHaveValue(mockTask.task);
-      expect(screen.getByLabelText(/description/i)).toHaveValue(mockTask.description);
-      expect(screen.getByLabelText(/category/i)).toHaveValue(mockTask.category);
+      expect(screen.getByLabelText(/name/i)).toHaveValue(mockTaskData[0].task);
+      expect(screen.getByLabelText(/description/i)).toHaveValue(mockTaskData[0].description);
+      expect(screen.getByLabelText(/category/i)).toHaveValue(mockTaskData[0].category);
       expect(screen.getByLabelText(/date/i)).toHaveValue("04/12/2024");
       expect(screen.getByLabelText(/time/i)).toHaveValue("09:00");
-      expect(screen.getByLabelText(/priority/i)).toHaveValue(mockTask.priority);
+      expect(screen.getByLabelText(/priority/i)).toHaveValue(mockTaskData[0].priority);
       expect(screen.getByLabelText(/fulfillment/i)).toHaveValue("6");
     });
   });
