@@ -1,7 +1,7 @@
 // mockDatabase.js
 export const mockTaskData = [
     {
-      id: "e1f1",
+      id: 1,
       task: "Apprendre React",
       description: "Développer un site en React",
       category: "Programmation",
