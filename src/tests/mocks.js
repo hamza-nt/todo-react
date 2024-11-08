@@ -1,4 +1,3 @@
-// mockDatabase.js
 export const mockTaskData = [
     {
       id: 1,
@@ -9,5 +8,5 @@ export const mockTaskData = [
       priority: "High",
       fulfillment: "6%"
     },
-    // Ajoute d'autres tâches simulées si nécessaire
+
   ];

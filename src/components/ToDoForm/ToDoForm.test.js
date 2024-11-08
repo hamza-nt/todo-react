@@ -57,11 +57,10 @@ describe('Composant ToDoForm', () => {
     });
   });
 
-  test('Récupération des données depuis une base de données simulée', async () => {
-    // Mock fetch pour retourner les données simulées
+  test('Récupération des données depuis une bd simulée', async () => {
     fetch.mockImplementationOnce(() =>
       Promise.resolve({
-        json: () => Promise.resolve(mockTaskData[0]), // Renvoie la première tâche de mockTaskData
+        json: () => Promise.resolve(mockTaskData[0]),
       })
     );
     
@@ -72,7 +71,6 @@ describe('Composant ToDoForm', () => {
         </Routes>
       </MemoryRouter>
     );
-    
     await waitFor(() => {
       expect(screen.getByLabelText(/name/i)).toHaveValue(mockTaskData[0].task);
       expect(screen.getByLabelText(/description/i)).toHaveValue(mockTaskData[0].description);
@@ -83,4 +81,5 @@ describe('Composant ToDoForm', () => {
       expect(screen.getByLabelText(/fulfillment/i)).toHaveValue("6");
     });
   });
+
 });
